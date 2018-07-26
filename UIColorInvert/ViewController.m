@@ -21,20 +21,18 @@
     // UI
     UIImage *originalImage = [UIImage imageNamed:@"g"];
     UIImageView *oImagView = [[UIImageView alloc] initWithImage:originalImage];
+    oImagView.contentMode = UIViewContentModeScaleAspectFill;
+    oImagView.clipsToBounds = YES;
     oImagView.frame = CGRectMake(0, 80, self.view.frame.size.width, 200);
     [self.view addSubview:oImagView];
     self.oImagView = oImagView;
     
     UIImage *invertImage = [self inverColorImage:originalImage.copy];
     UIImageView *verImagView = [[UIImageView alloc] initWithImage:invertImage];
+    verImagView.contentMode = UIViewContentModeScaleAspectFill;
+    verImagView.clipsToBounds = YES;
     verImagView.frame = CGRectMake(0, 290, self.view.frame.size.width, 200);
     [self.view addSubview:verImagView];
-    UILabel *label  = [[UILabel alloc] initWithFrame:CGRectMake(0, 200, self.view.frame.size.width, 20)];
-    label.font = [UIFont systemFontOfSize:15];
-    label.textColor = [UIColor colorWithWhite:0.6 alpha:1.0];
-    label.textAlignment = NSTextAlignmentRight;
-    label.text = @"点击反色图片可保存";
-    [verImagView addSubview:label];
     
     [verImagView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(savePhoto)]];
     verImagView.userInteractionEnabled = YES;
@@ -46,6 +44,13 @@
     [button addTarget:self action:@selector(selectPhoto) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:button];
     self.selecBtn = button;
+    
+    UILabel *label  = [[UILabel alloc] initWithFrame:CGRectMake(80, 0, self.view.frame.size.width - 100, 20)];
+    label.font = [UIFont systemFontOfSize:15];
+    label.textColor = [UIColor colorWithWhite:0.6 alpha:1.0];
+    label.textAlignment = NSTextAlignmentRight;
+    label.text = @"点击反色图片可保存";
+    [button addSubview:label];
 }
 
 // 相册相关
@@ -53,7 +58,6 @@
     // 跳转到相机或相册页面
     UIImagePickerController *imagePickerController = [[UIImagePickerController alloc] init];
     imagePickerController.delegate = self;
-    imagePickerController.allowsEditing = YES;
     imagePickerController.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
     [self presentViewController:imagePickerController animated:YES completion:nil];
 }
@@ -67,7 +71,7 @@
     if (!error) {
         NSLog(@"save success");
         [self.selecBtn setTitle:@"保存成功" forState:UIControlStateNormal];
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             [self.selecBtn setTitle:@"相册" forState:UIControlStateNormal];
         });
     }
