@@ -1,5 +1,5 @@
 # UIColorInvert
-an app can inver picture color RGB.一个简单的iOS小程序，用于反转图片的颜色，并将翻转后的图片保存到相册。
+an app can inver picture color RGB.一个简单的iOS小程序，用于反转图片的颜色，并将颜色反转后的图片保存到相册。
 like this:
 ![image](https://github.com/giveMeHug/UIColorInvert/blob/master/UIColorInvert/IMG_1559.PNG)
 > 原理
